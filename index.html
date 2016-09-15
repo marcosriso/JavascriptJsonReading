@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Json Reader</title>
+    <link href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="assets/custom.css" rel="stylesheet">
+</head>
+<body ng-app="jsonReader">
+    <div class="container" ng-controller="readBrands">
+        <div class="well well-sm margin-top-bar">
+            <b>JSON Reader - User Interactions</b>
+        </div>
+        <div class="row" ng-cloak >
+            <div class="col-md-2">
+                <h3>Filter</h3>
+                <hr>
+                <b>By Brand</b>
+
+                <ul ng-init="readBrandsInfo()" class="margin-top-bar nav nav-pills nav-stacked">
+                    <li ng-repeat="b in brands | unique: 'id'">
+                        <img ng-src="{{ b.image }}" class="small-brand" alt="{{ b.name }}">
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10" ng-init="calculate()"></div>
+        </div>
+    </div>
+
+    <script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/bower_components/angular/angular.min.js"></script>
+    <script src="assets/bower_components/angular/angular-filter.min.js"></script>
+    <script src="app/app.js"></script>
+</body>
+</html>

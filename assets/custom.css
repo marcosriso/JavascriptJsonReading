@@ -1,0 +1,9 @@
+.margin-top-bar {
+    margin-top: 8px;
+}
+
+.small-brand {
+    padding: 12px;
+    max-width: 80px;
+    max-height: 80px;
+}
