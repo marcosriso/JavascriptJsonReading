@@ -9,3 +9,5 @@ I'm using a submodule at https://github.com/alexandre-gauge/frontend_data/
 
 Point you vHost to the root of the folder you just cloned.
 If you are facing any troubles with CSS and JS paths, please contact me or take a look at the paths inserted at index.html.
+
+![Sample](/data/gauge.png?raw=true "Sample")
