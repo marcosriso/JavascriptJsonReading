@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" manifest="manifest.appcache">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Json Reader</title>
+    <title>Gauge Json Reader</title>
     <link href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="assets/custom.css" rel="stylesheet">
@@ -10,29 +10,38 @@
 <body ng-app="jsonReader">
     <div class="container" ng-controller="readBrands">
         <div class="well well-sm margin-top-bar">
-            <b>JSON Reader - User Interactions</b>
+            <b><i class="glyphicon glyphicon-thumbs-up"></i> Gauge JSON Reader - User Interactions</b>
+            <span class="pull-right">By <a href="https://twitter.com/mriso_dev" target="_blank">@mriso_dev</a></span>
         </div>
         <div class="row" ng-cloak >
             <div class="col-md-2">
-                <h3>Filter</h3>
+                <h3>Filter <small>By Brand</small></h3>
                 <hr>
-                <b>By Brand</b>
-
-                <ul ng-init="readBrandsInfo()" class="margin-top-bar nav nav-pills nav-stacked">
-                    <li ng-repeat="b in brands | unique: 'id'">
-                        <img ng-src="{{ b.image }}" class="small-brand" alt="{{ b.name }}">
-                    </li>
-                </ul>
+                <div ng-init="readBrandsInfo()" class="row margin-top-bar">
+                    <div class="col-md-12 col-xs-2" ng-repeat="b in brands | unique: 'id'">
+                        <a ng-href="#" ng-click="updateFilter(b.id, b.name)"><img ng-src="{{ b.image }}" class="small-brand" alt="{{ b.name }}"></a>
+                    </div>
+                </div>
+                <div class="margin-top-bar">
+                    <input class="btn btn-danger" type="button" ng-click="reset()" value="All Brands">
+                </div>
             </div>
-            <div class="col-md-10" ng-init="calculate()">
-                <h3>Top Influencers</h3>
+            <div class="col-md-10" ng-init="calculate()" ng-cloak>
+                <h3>Top Influencers - {{ filter }}</h3>
                 <hr>
                 <div ng-repeat="u in table">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-sm-1 col-xs-2">
                             <img ng-src="{{ u.userpic }}" class="img-responsive">
                         </div>
-                        <div class="col-md-10"></div>
+                        <div class="col-sm-7 col-xs-6">
+                            <b>{{ u.username.title | ucwords  }} {{ u.username.first  | ucwords }} {{ u.username.last  | ucwords }}</b><br>
+                            <span><i>{{ u.userloc.city | ucwords }} - {{ u.userloc.state | ucwords }}</i></span><br>
+                            <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:{{ u.useremail }}">{{ u.useremail }}</a>
+                        </div>
+                        <div class="col-xs-4">
+                            <h1>{{ u.interactions }} <small>Interactions</small></h1>
+                        </div>
                     </div>
                     <hr>
                 </div>
