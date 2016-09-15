@@ -9,19 +9,19 @@ app.controller('readBrands', function ($scope, $http){
     $scope.brands = [];
     $scope.users = [];
     $scope.interactions = [];
-    var calculated = [];
+    $scope.table = {};
 
     $scope.readBrandsInfo = function(){
-        $http.get('data/brands.json').success(function(data) {
+        $http.get('data/frontend_data/brands.json').success(function(data) {
            $scope.brands = data;
         });
     }
 
     $scope.calculate = function(){
-        var userpromise = $http.get('data/users.json').success(function(data) {
+        var userpromise = $http.get('data/frontend_data/users.json').success(function(data) {
             $scope.users = data;
         });
-        var intepromise = $http.get('data/interactions.json').success(function(data) {
+        var intepromise = $http.get('data/frontend_data/interactions.json').success(function(data) {
             $scope.interactions = data;
         });
 
@@ -29,20 +29,42 @@ app.controller('readBrands', function ($scope, $http){
             function(payload1) {
                 userpromise.then(
                     function (payload2) {
-                        var users = {};
-                        for(var i=0; i < $scope.interactions.length; i++){
-                            var int = $scope.interactions[i];
-                            if(!users[int.id]){
-                                users[int.id] = [];
+
+                     var result =  $scope.interactions.reduce(function (res, obj) {
+                            if (!(obj.user in res)) {
+                                res.__array.push(res[obj.user] = obj);
+                                res[obj.user].count = 1;
+                            } else {
+                                res[obj.user].count += 1;
                             }
+                            return res;
+                        }, {__array: []}).__array
+                            .sort(function (a, b) {
+                                return b.count - a.count;
+                            });
 
-                            users[int.id].push(int.type);
-
-
+                        var optimized = [];
+                        for(var i=0; i < result.length; i++){
+                            for(var z=0; z < $scope.users.length; z++){
+                                if(result[i].user == $scope.users[z].id){
+                                    optimized.push({
+                                        userid: result[i].user,
+                                        username: $scope.users[z].name,
+                                        useremail: $scope.users[z].email,
+                                        userpic: $scope.users[z].picture.thumbnail,
+                                        userloc: $scope.users[z].location,
+                                        interactions: result[i].count
+                                    });
+                                }
+                            }
                         }
 
-                        console.log(users);
+
+                        console.log(optimized);
+                        $scope.table = optimized;
                     }
+
+
                 )
             }
         );

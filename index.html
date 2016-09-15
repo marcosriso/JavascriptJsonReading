@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="manifest.appcache">
 <head>
     <meta charset="UTF-8">
     <title>Json Reader</title>
@@ -24,7 +24,19 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-md-10" ng-init="calculate()"></div>
+            <div class="col-md-10" ng-init="calculate()">
+                <h3>Top Influencers</h3>
+                <hr>
+                <div ng-repeat="u in table">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img ng-src="{{ u.userpic }}" class="img-responsive">
+                        </div>
+                        <div class="col-md-10"></div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
         </div>
     </div>
 
